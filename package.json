@@ -1,0 +1,48 @@
+{
+  "name": "rgb-rest-client",
+  "version": "1.0.0",
+  "description": "RGB REST API JavaScript client (for both web browsers and Node.js)",
+  "main": "src/index.js",
+  "unpkg": "umd/rgb-rest-client.js",
+  "scripts": {
+    "build": "webpack",
+    "build-prod": "webpack --mode=production",
+    "build-web": "npm run build",
+    "build-node": "npm run build -- --config webpack.config.node.js",
+    "build-web-prod": "npm run build-prod",
+    "build-node-prod": "npm run build-prod -- --config webpack.config.node.js",
+    "prepublishOnly": "npm run test-node-umd-prod && npm run build-web-prod",
+    "test-node": "env RUNNING_MOCHA=\"yes\" mocha",
+    "test-node-umd": "npm run build-node && env RUNNING_MOCHA=\"yes\" mocha \"./test/umd/*.js\"",
+    "test-node-umd-prod": "npm run build-node-prod && env RUNNING_MOCHA=\"yes\" mocha \"./test/umd/*.js\"",
+    "coverage-node": "nyc npm run test-node",
+    "coverage-node-html-report": "npm run coverage-node && nyc report -r html",
+    "prep-test-browser": "npm run build-web-prod"
+  },
+  "files": [
+    "/src/",
+    "/umd/"
+  ],
+  "keywords": [
+    "RGB",
+    "REST API",
+    "client"
+  ],
+  "author": "Cláudio de Castro",
+  "license": "MIT",
+  "engines": {
+    "node": "^10.16"
+  },
+  "dependencies": {
+    "cross-fetch": "^3.0.6",
+    "encoding": "^0.1.13"
+  },
+  "devDependencies": {
+    "chai": "^4.3.3",
+    "mocha": "^8.3.1",
+    "nyc": "^15.1.0",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
+  },
+  "repository": "git@github.com:blockchainofthings/RgbRestClientJS.git"
+}
