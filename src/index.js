@@ -17,7 +17,7 @@ class RgbRestClient {
      * @param {string} [options.network=testnet] Target Bitcoin blockchain network.
      * @param {string} [options.host=rgb.blockchainofthings.com] Host name (with optional port) of target RGB REST API server.
      * @param {boolean} [options.secure=true] Indicates whether a secure connection (HTTPS) should be used.
-     * @param {string} [options.version=1.0] Version of RGB REST API to target.
+     * @param {string} [options.version=1.1] Version of RGB REST API to target.
      */
     constructor(options) {
         options = options || {};
@@ -26,7 +26,7 @@ class RgbRestClient {
 
         let host = typeof options.host === 'string' && options.host.length > 0 ? options.host : 'rgb.blockchainofthings.com';
         let secure = typeof options.secure === 'boolean' ? options.secure : true;
-        let version = typeof options.version === 'string' && options.version.length > 0 ? options.version : '1.0';
+        let version = typeof options.version === 'string' && options.version.length > 0 ? options.version : '1.1';
         let uriPrefix = (secure ? 'https://' : 'http://') + host;
         let apiBaseUriPath = apiPath + version + '/';
 

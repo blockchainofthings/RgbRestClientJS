@@ -9,7 +9,7 @@
                 const rgb = new rgbRestClient.RgbRestClient();
 
                 expect(rgb).to.have.property('network', 'testnet');
-                expect(rgb).to.have.property('rootApiEndPoint', 'https://rgb.blockchainofthings.com/api/1.0/');
+                expect(rgb).to.have.property('rootApiEndPoint', 'https://rgb.blockchainofthings.com/api/1.1/');
             });
 
             it('should instantiate client with specific options', function () {
@@ -17,11 +17,11 @@
                     network: 'signet',
                     host: 'localhost:3060',
                     secure: false,
-                    version: '1.1'
+                    version: '1.0'
                 });
 
                 expect(rgb).to.have.property('network', 'signet');
-                expect(rgb).to.have.property('rootApiEndPoint', 'http://localhost:3060/api/1.1/');
+                expect(rgb).to.have.property('rootApiEndPoint', 'http://localhost:3060/api/1.0/');
             });
 
             describe('Issue Fungible Asset', function () {
@@ -29,7 +29,7 @@
                     network: 'signet',
                     host: 'localhost:3060',
                     secure: false,
-                    version: '1.0'
+                    version: '1.1'
                 });
 
                 describe('Call using callback', function () {
@@ -39,7 +39,7 @@
                             network: 'signet',
                             host: 'localhost:9999',
                             secure: false,
-                            version: '1.0'
+                            version: '1.1'
                         });
 
                         rgb2.issueFungible(
@@ -141,7 +141,7 @@
                             network: 'signet',
                             host: 'localhost:9999',
                             secure: false,
-                            version: '1.0'
+                            version: '1.1'
                         });
 
                         let error;
@@ -245,7 +245,7 @@
                     network: 'signet',
                     host: 'localhost:3060',
                     secure: false,
-                    version: '1.0'
+                    version: '1.1'
                 });
 
                 describe('Call using callback', function () {

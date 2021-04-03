@@ -56,7 +56,7 @@ The following options can be used when instantiating the RGB REST client object:
     - *'signet'*
 - **host** \[String\] - (optional, default: <b>*'rgb.blockchainofthings.com'*</b>) Host name (with optional port) of target RGB REST API server.
 - **secure** \[String\] - (optional, default: <b>*true*</b>) Indicates whether a secure connection (HTTPS) should be used.
-- **version** \[String\] - (optional, default: <b>*'1.0'*</b>) Version of RGB REST API to target.
+- **version** \[String\] - (optional, default: <b>*'1.1'*</b>) Version of RGB REST API to target.
 
 ### Calling API methods
 
