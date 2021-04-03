@@ -110,6 +110,46 @@ rgb.issueFungible(
 });
 ```
 
+#### Retrieve unspent Bitcoin transaction outputs managed by a wallet
+
+Using a callback:
+
+```javascript
+rgb.walletUtxos(
+    'wpkh([bbdc7dee/0\'/0\']tpubDAi9mxwvCucazfwjsVTe7BQ9imvKsLA2ZifaHpETwAEtMNroXkWeVAQGhq6EyhD7i8fBCE2mVaeLL638g8zD1faLXtcFHsvAdxuD1ffNgWs/*\')#nx3xqje2', // Wallet descriptor
+    {       // Options
+        keyRangeStartIdx: 0,
+        keyRangeCount: 100
+    },
+    (err, data) => {
+        if (err) {
+            console.error('Error retrieving wallet UTXOs:', err);
+        }
+        else {
+            console.log('Wallet UTXOs:', data.utxos);
+        }
+    }
+);
+```
+
+Using promise:
+
+```javascript
+rgb.walletUtxos(
+    'wpkh([bbdc7dee/0\'/0\']tpubDAi9mxwvCucazfwjsVTe7BQ9imvKsLA2ZifaHpETwAEtMNroXkWeVAQGhq6EyhD7i8fBCE2mVaeLL638g8zD1faLXtcFHsvAdxuD1ffNgWs/*\')#nx3xqje2', // Wallet descriptor
+    {       // Options
+        keyRangeStartIdx: 0,
+        keyRangeCount: 100
+    }
+)
+.then(data => {
+    console.log('Wallet UTXOs:', data.utxos);
+})
+.catch(err => {
+    console.error('Error retrieving wallet UTXOs:', err);
+});
+```
+
 ### Error handling
 
 Two types of error can take place when calling API methods: client or API error.
