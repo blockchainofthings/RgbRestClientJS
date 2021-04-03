@@ -60,30 +60,30 @@ The following options can be used when instantiating the RGB REST client object:
 
 ### Calling API methods
 
-#### Issue Fungible Asset
+#### Issue fungible asset
 
 Using a callback:
 
 ```javascript
 rgb.issueFungible(
-  'TST1',           // Ticker
-  'Test asset #1',  // Name
-  0,                // Precision
-  {                 // Allocations
-    coins:123,
-    outpoint:'5c1cb187a0d80955f87d65e3b798b5975362aa5e6f48d99a293bf162606fbdaa:4'
-  },
-  {                 // Options
-    description:'RGB asset used for testing RGB REST client'    // Description
-  },
-  (err, data) => {
-    if (err) {
-      console.error('Error issuing fungible RGB asset:', err);
+    'TST1',           // Ticker
+    'Test asset #1',  // Name
+    0,                // Precision
+    {                 // Allocations
+        coins:123,
+        outpoint:'5c1cb187a0d80955f87d65e3b798b5975362aa5e6f48d99a293bf162606fbdaa:4'
+    },
+    {                 // Options
+        description:'RGB asset used for testing RGB REST client'    // Description
+    },
+    (err, data) => {
+        if (err) {
+            console.error('Error issuing fungible RGB asset:', err);
+        }
+        else {
+            console.log('Newly issued asset info:', data.assetInfo);
+        }
     }
-    else {
-      console.log('Newly issued asset info:', data.assetInfo);
-    }
-  }
 );
 ```
 
