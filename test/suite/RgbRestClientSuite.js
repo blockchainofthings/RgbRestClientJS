@@ -239,6 +239,173 @@
                     });
                 });
             });
+
+            describe('Retrieve Wallet UTXOs', function () {
+                const rgb = new rgbRestClient.RgbRestClient({
+                    network: 'signet',
+                    host: 'localhost:3060',
+                    secure: false,
+                    version: '1.0'
+                });
+
+                describe('Call using callback', function () {
+                    it('should return an error if an invalid param is passed', function (done) {
+                        rgb.walletUtxos(
+                            '',
+                            {
+                                keyRangeStartIdx: -1,
+                                keyRangeCount: 0
+                            },
+                            (err, data) => {
+                                let error;
+
+                                try {
+                                    expect(err).to.exist.and.be.an.instanceof(rgbRestClient.RgbRestError)
+                                    expect(err).to.have.property(
+                                        'httpStatusCode',
+                                        400
+                                    )
+                                    expect(err).to.have.property(
+                                        'httpStatusMessage',
+                                        'Bad Request'
+                                    )
+                                    expect(err).to.have.property(
+                                        'apiErrorMessage',
+                                        'Invalid parameters'
+                                    )
+                                    expect(err).to.have.property(
+                                        'message',
+                                        'Error returned from RGB REST API endpoint: [400] Invalid parameters'
+                                    );
+                                }
+                                catch(err) {
+                                    error = err;
+                                }
+
+                                done(error);
+                            }
+                        );
+                    });
+
+                    it('should get success response from API method', function (done) {
+                        rgb.walletUtxos(
+                            'wpkh(tprv8e27dYug4Xvv7Cuwyqo3hmk39kQPhzy7zR4o1JCAWtSVWtc2uMh4JfnQXjWrh3N7c2g7dcVQGvesRiWJERDmf4TERsBCwG8yXAT2TtpYhzt/*\')',
+                            {
+                                keyRangeStartIdx: 0,
+                                keyRangeCount: 100
+                            },
+                            (err, data) => {
+                                let error;
+
+                                try {
+                                    expect(data).to.exist.and.be.an('object')
+                                    .with.property('utxos')
+                                    .that.is.an('array');
+
+                                    if (data.utxos.length > 0) {
+                                        const utxo = data.utxos[0];
+
+                                        expect(utxo).to.be.an('object');
+                                        expect(utxo).to.have.property('txid')
+                                        .that.is.a('string');
+                                        expect(utxo).to.have.property('vout')
+                                        .that.is.a('number');
+                                        expect(utxo).to.have.property('amount')
+                                        .that.is.a('number');
+                                        expect(utxo).to.have.property('height')
+                                        .that.is.a('number');
+                                    }
+                                }
+                                catch(err) {
+                                    error = err;
+                                }
+
+                                done(error);
+                            }
+                        );
+                    });
+                });
+
+                describe('Call using promise', function () {
+                    it('should return a rejected promise if an invalid param is passed', function (done) {
+                        let error;
+
+                        rgb.walletUtxos(
+                            '',
+                            {
+                                keyRangeStartIdx: -1,
+                                keyRangeCount: 0
+                            }
+                        )
+                        .then(function (res) {
+                            error = new Error('Promise should have been rejected');
+                        }, function (err) {
+                            expect(err).to.exist.and.be.an.instanceof(rgbRestClient.RgbRestError)
+                            expect(err).to.have.property(
+                                'httpStatusCode',
+                                400
+                            )
+                            expect(err).to.have.property(
+                                'httpStatusMessage',
+                                'Bad Request'
+                            )
+                            expect(err).to.have.property(
+                                'apiErrorMessage',
+                                'Invalid parameters'
+                            )
+                            expect(err).to.have.property(
+                                'message',
+                                'Error returned from RGB REST API endpoint: [400] Invalid parameters'
+                            );
+                        })
+                        .catch(function (err) {
+                            error = err;
+                        })
+                        .finally(function () {
+                            done(error);
+                        });
+                    });
+
+                    it('should get success response from API method', function (done) {
+                        let error;
+
+                        rgb.walletUtxos(
+                            'wpkh(tprv8e27dYug4Xvv7Cuwyqo3hmk39kQPhzy7zR4o1JCAWtSVWtc2uMh4JfnQXjWrh3N7c2g7dcVQGvesRiWJERDmf4TERsBCwG8yXAT2TtpYhzt/*\')',
+                            {
+                                keyRangeStartIdx: 0,
+                                keyRangeCount: 100
+                            }
+                        )
+                        .then(function (data) {
+                            expect(data).to.exist.and.be.an('object')
+                            .with.property('utxos')
+                            .that.is.an('array');
+
+                            if (data.utxos.length > 0) {
+                                const utxo = data.utxos[0];
+
+                                expect(utxo).to.be.an('object');
+                                expect(utxo).to.have.property('txid')
+                                .that.is.a('string');
+                                expect(utxo).to.have.property('vout')
+                                .that.is.a('number');
+                                expect(utxo).to.have.property('amount')
+                                .that.is.a('number');
+                                expect(utxo).to.have.property('height')
+                                .that.is.a('number');
+                            }
+                        }, function (err) {
+                            error = new Error('Promise should have been resolved');
+                        })
+                        .catch(function (err) {
+                            error = err;
+                        })
+                        .finally(function () {
+                            done(error);
+                        });
+                    });
+                });
+            });
         })
     }
 

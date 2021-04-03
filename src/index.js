@@ -34,7 +34,7 @@ class RgbRestClient {
     }
 
     /**
-     *
+     * Issue new fungible RGB asset.
      * @param {string} ticker
      * @param {string} name
      * @param {string} precision
@@ -92,6 +92,49 @@ class RgbRestClient {
         );
     }
 
+    /**
+     * Retrieve unspent Bitcoin transaction outputs (UTXOs) managed by a wallet.
+     * @param {string} walletDescriptor
+     * @param {object} [options]
+     * @param {number} [options.keyRangeStartIdx]
+     * @param {number} [options.keyRangeCount]
+     * @param {function} [callback]
+     * @returns {(undefined|Promise)} Undefined if a callback function is passed. Otherwise, a promise that resolves
+     *  to an array of UTXOs.
+     */
+    walletUtxos(walletDescriptor, options, callback) {
+        if (typeof options === 'function') {
+            callback = options;
+            options = undefined;
+        }
+
+        options = options || {};
+
+        const queryParams = {
+            walletDescriptor
+        };
+
+        if (options.keyRangeStartIdx !== undefined) {
+            queryParams.keyRangeStartIdx = options.keyRangeStartIdx;
+        }
+
+        if (options.keyRangeCount !== undefined) {
+            queryParams.keyRangeCount = options.keyRangeCount;
+        }
+
+        return this._request(
+            'GET',
+            ':network/wallet/utxos',
+            {
+                url: {
+                    network: this.network
+                },
+                query: queryParams
+            },
+            callback
+        );
+    }
+
     _request(method, methodPath, params, data, callback) {
         if (typeof params === 'function') {
             callback = params;
@@ -123,8 +166,48 @@ class RgbRestClient {
             .then(body => callback(null, parseSuccessResponse(body)))
             .catch(err => callback(err));
         }
+        else if (method === 'GET') {
+            this._getRequest(methodPath, params)
+            .then(body => callback(null, parseSuccessResponse(body)))
+            .catch(err => callback(err));
+        }
 
         return result;
+    }
+
+    async _getRequest(methodPath, params) {
+        const url = this._assembleMethodEndPointUrl(methodPath, params);
+        const headers = new fetch.Headers();
+        headers.append('Content-Type','application/json; charset=utf-8');
+
+        let init = {
+            method: 'GET',
+            headers
+        };
+
+        let res;
+
+        try {
+            res = await fetch(url, init);
+        }
+        catch (err) {
+            throw new Error('Error calling GET request: ' + err.toString());
+        }
+
+        let body;
+
+        try {
+            body = await res.json();
+        }
+        catch (err) {
+            throw new Error('Error reading GET request response: ' + err.toString());
+        }
+
+        if (!res.ok) {
+            throw new RgbRestError(res.statusText, res.status, typeof body === 'object' && body.message ? body.message : undefined);
+        }
+
+        return body;
     }
 
     async _postRequest(methodPath, params, data) {
