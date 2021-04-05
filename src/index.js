@@ -41,9 +41,9 @@ class RgbRestClient {
      * @param {object|object[]} allocations
      * @param {object} [options]
      * @param {string} [options.description]
-     * @param {object[]} [options.inflation]
-     * @param {string[]} [options.renomination]
-     * @param {string[]} [options.epoch]
+     * @param {object|object[]} [options.inflation]
+     * @param {string} [options.renomination]
+     * @param {string} [options.epoch]
      * @param {function} [callback]
      * @returns {(undefined|Promise)} Undefined if a callback function is passed. Otherwise, a promise that resolves
      *  to an asset info object.
