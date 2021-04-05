@@ -1,6 +1,6 @@
 {
   "name": "rgb-rest-client",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "RGB REST API JavaScript client (for both web browsers and Node.js)",
   "main": "src/index.js",
   "unpkg": "umd/rgb-rest-client.js",
