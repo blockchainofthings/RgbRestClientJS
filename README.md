@@ -205,7 +205,7 @@ Expected result:
 ```
 HTTP status code: 400
 HTTP status message: Bad Request
-Catenis error message: Invalid parameters
+API error message: Invalid parameters
 Compiled error message: Error returned from RGB REST API endpoint: [400] Invalid parameters
 ```
 
